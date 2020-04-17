@@ -2,14 +2,10 @@ Sys.setenv(PGHOST = "10.101.13.99", PGDATABASE="crsp")
 
 library(DBI)
 library(dplyr, warn.conflicts = FALSE)
-pg <- dbConnect(RPostgres::Postgres())
-rs <- dbExecute(pg, "SET work_mem TO '8GB'")                   #q2: ?
-# rs <- dbExecute(pg, "SET maintance_work_mem TO '1GB'")   #q1: ?
-rs <- dbExecute(pg, "SET search_path TO crsp, public")
 
-library(DBI)
-library(dplyr)
-library(dbplyr)
+pg <- dbConnect(RPostgres::Postgres())
+rs <- dbExecute(pg, "SET work_mem TO '2GB'")              
+rs <- dbExecute(pg, "SET search_path TO crsp, public")
 
 #1.1 Use tbl() function to pull the following virtual data frames:
 #crsp.ccmxpf_linktable, crsp.dsf, crsp.dsi,
