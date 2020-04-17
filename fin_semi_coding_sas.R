@@ -1,6 +1,3 @@
-rm(list=ls())
-setwd("C:/Users/WuYiyang/Desktop/Data Scientist/comp/R-1")
-memory.limit(20000000)
 
 Sys.setenv(PGHOST = "10.101.13.99", PGDATABASE="crsp")
 Sys.setenv(PGUSER="far", PGPASSWORD="honours_2019")
