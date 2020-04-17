@@ -44,7 +44,6 @@ fundq1 <-
 # Prepare for next merge
 library(lubridate)
 fund1.2 <- funda1 %>%
-  semi_join(fundq1,by=c("gvkey","cusip","cik","fyear")) %>%
   inner_join(fundq1,by=c("gvkey","cusip","cik","fyear"))
 
 #check if na
