@@ -22,33 +22,6 @@ time <- tbl(pg,sql("SELECT * FROM generate_series(-361,180,1)")) %>%
   mutate(i=1) %>%
   rename (series = generate_series)
 
-######################################Directly from SAS
-# setwd("C:/Users/WuYiyang/Desktop/Data Scientist/comp/R-1")
-# library(haven)
-# library(stringr)
-# library(purrr)
-# funda<-read_sas("funda.sas7bdat")
-# names(funda)<-map_chr(names(funda), tolower)
-# str(funda)
-#
-# fundq<-read_sas("fundq.sas7bdat")
-# names(fundq)<-map_chr(names(fundq), tolower)
-# str(fundq)
-#
-# dsi<-read_sas("dsi.sas7bdat")
-# names(dsi)<-map_chr(names(dsi), tolower)
-# str(dsi)
-#
-# memory.limit()
-# dsf<-read_sas("dsfsmall.sas7bdat")
-# names(dsf)<-map_chr(names(dsf), tolower)
-# str(dsf)
-#
-# #ccmxpf_linktable <-ccmxpf_linktable %>%
-# #  collect()
-# load(file = "ccmxpf_linktable.RData")
-# load(file="time.RData")
-
 #########################1.2 Merge standard (STD) Compustat data of funda and fundq to get necessary Earnings related variables.
 funda1 <-
   funda %>%
