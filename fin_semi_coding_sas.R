@@ -44,14 +44,10 @@ fundq1 <-
 # Prepare for next merge
 library(lubridate)
 fund1.2 <- funda1 %>%
-  inner_join(fundq1,by=c("gvkey","cusip","cik","fyear"))
+  inner_join(fundq1,by=c("gvkey","cusip","cik","fyear")) %>%
+  # Fiscal year at 2nd half of December, fiscal year = cover 12 months
+  filter(fyr==12, pddur==12)
 
-#check if na
-#####SAS:table(is.na(fund1.2$pddur))
-#####SAS:table(is.na(fund1.2$fyr))
-#fiscal year at 2nd half of December, fiscal year = cover 12 months
-fund1.2=fund1.2%>%
-  filter(fyr==12,pddur==12)
 #check for duplication
 #####SAS:sum(fund1.2 %>% duplicated())  #0 good！
 
