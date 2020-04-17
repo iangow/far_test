@@ -1,6 +1,5 @@
-
 Sys.setenv(PGHOST = "10.101.13.99", PGDATABASE="crsp")
-Sys.setenv(PGUSER="far", PGPASSWORD="honours_2019")
+
 library(DBI)
 library(dplyr, warn.conflicts = FALSE)
 pg <- dbConnect(RPostgres::Postgres())
