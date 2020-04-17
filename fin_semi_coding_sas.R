@@ -54,8 +54,7 @@ fund1.3 <- fund1.2 %>%
   arrange(fyear) %>%
   mutate(lagfyear = lag(fyear), lagepspi=lag(epspi)) %>%
   filter(!is.na(lagfyear) & !is.na(lagepspi) & !is.na(epspi)) %>%
-  mutate(ifgoodnews = epspi>lagepspi) %>%
-  mutate(ifgoodnews = if_else(ifgoodnews==TRUE,"good","bad")) %>%
+  mutate(ifgoodnews = if_else(epspi > lagepspi, "good", "bad")) %>%
   filter(!is.na(rdq)) %>%
   filter(lagfyear == (fyear-1)) %>%    # two successive fiscal years
   ungroup()
@@ -66,7 +65,6 @@ ccmxpf_linktable1 <-
   filter(!is.na(lpermco) | !is.na(lpermno)) %>%
   filter(usedflag == 1) %>%
   filter(linktype %in% c("LU","LC","LD","LN","LS","LX")) %>%
-  mutate(linkdt = as.Date(as.character(linkdt)),linkenddt=as.Date(as.character(linkenddt))) %>%
   distinct() 
 
 fund1.4 <-
@@ -80,9 +78,9 @@ fund1.4 <-
   filter(is.na(linkenddt) | (!is.na(linkenddt) & linkenddt >= date)) %>%
   rename(permno = lpermno, permco = lpermco) 
 
-#########################1.5 Merge with dsi to get necesary Stock Price related variables.
-
-dsi1 = dsi %>%
+# 1.5 Merge with dsi to get stock price-related variables. ----
+dsi1 <-
+  dsi %>%
   select(date, ewretd) %>%
   mutate(ewretd = log(1+ewretd))
 
