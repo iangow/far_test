@@ -11,13 +11,12 @@ rs <- dbExecute(pg, "SET search_path TO crsp, public")
 #crsp.ccmxpf_linktable, crsp.dsf, crsp.dsi,
 #comp.funda, comp.fundq, comp.company.
 
-funda<-tbl(pg, sql("SELECT * FROM comp.funda "))  #annual financial
-fundq<-tbl(pg, sql("SELECT * FROM comp.fundq "))   # quarterly financial
-comp<-tbl(pg, sql("SELECT * FROM comp.company "))  # company basic
-dsf<-tbl(pg, sql("SELECT * FROM crsp.dsf "))     # daily stock firm
-dsi<-tbl(pg, sql("SELECT * FROM crsp.dsi "))     # daily stock index
-ccmxpf_linktable<-tbl(pg,sql("SELECT * FROM crsp.ccmxpf_linktable"))
-
+funda <- tbl(pg, sql("SELECT * FROM comp.funda "))   # annual financial
+fundq <- tbl(pg, sql("SELECT * FROM comp.fundq "))   # quarterly financial
+comp <- tbl(pg, sql("SELECT * FROM comp.company "))  # company basic
+dsf <- tbl(pg, sql("SELECT * FROM crsp.dsf "))       # daily stock firm
+dsi <- tbl(pg, sql("SELECT * FROM crsp.dsi "))       # daily stock index
+ccmxpf_linktable <- tbl(pg,sql("SELECT * FROM crsp.ccmxpf_linktable"))
 
 time <- tbl(pg,sql("SELECT * FROM generate_series(-361,180,1)")) %>%
   mutate(i=1) %>%
