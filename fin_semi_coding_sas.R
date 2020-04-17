@@ -22,13 +22,14 @@ time <- tbl(pg,sql("SELECT * FROM generate_series(-361,180,1)")) %>%
   mutate(i=1) %>%
   rename (series = generate_series)
 
-#########################1.2 Merge standard (STD) Compustat data of funda and fundq to get necessary Earnings related variables.
+# 1.2 Merge standard (STD) Compustat to get earnings-related variables. 
 funda1 <-
   funda %>%
   filter(indfmt == 'INDL' & datafmt == 'STD',
-         popsrc == 'D' & consol == 'C') %>%   #STD
-  filter(between(fyear, 1970, 2018)) %>%    # fiscal year end in December
-  select(gvkey, cik, cusip, fyear, fyr,apdedate,pddur, epspi, prcc_f) %>%
+         popsrc == 'D' & consol == 'C') %>% 
+  # fiscal year-end in December
+  filter(between(fyear, 1970, 2018)) %>%    
+  select(gvkey, cik, cusip, fyear, fyr, apdedate, pddur, epspi, prcc_f) %>%
   rename(enddate = apdedate)
 
 fundq1 <-
@@ -36,15 +37,13 @@ fundq1 <-
   filter(indfmt == 'INDL' & datafmt == 'STD',
          popsrc == 'D' & consol == 'C') %>%   #STD
   filter(between(fyearq, 1970, 2018),fqtr==4) %>%  #only keep fiscal quarter 4
-  select(gvkey, cik, cusip,apdedateq,fyearq,rdq) %>%
-  rename(enddate = apdedateq,fyear=fyearq)  %>%
+  select(gvkey, cik, cusip, apdedateq, fyearq, rdq) %>%
+  rename(enddate = apdedateq, fyear=fyearq)  %>%
   filter(!is.na(rdq))
 
-#prepare for next merge
-#####SAS:attr(fundq1$fyear,"label")<-attr(funda1$fyear,"label")
-
+# Prepare for next merge
 library(lubridate)
-fund1.2 <-funda1 %>%
+fund1.2 <- funda1 %>%
   semi_join(fundq1,by=c("gvkey","cusip","cik","fyear")) %>%
   inner_join(fundq1,by=c("gvkey","cusip","cik","fyear"))
 
